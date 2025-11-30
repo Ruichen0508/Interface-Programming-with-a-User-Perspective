@@ -1,0 +1,75 @@
+/* Base Styles and Layout */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #2e2640; /* Kahoot! style deep purple background */
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+#quiz-container {
+    width: 90%;
+    max-width: 800px;
+    text-align: center;
+}
+
+/* Question Area */
+#question-area h1 {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 2em;
+    margin-bottom: 30px;
+}
+
+/* Options Grid (Key Layout) */
+#options-grid {
+    display: grid;
+    /* 2x2 grid layout */
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 20px; /* Spacing between buttons */
+    height: 400px; /* Give the options area a defined height */
+}
+
+/* Individual Option Button */
+.option {
+    color: white;
+    font-size: 1.5em;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px; 
+    padding: 30px;
+    transition: background-color 0.2s, transform 0.1s;
+    /* Center the option text */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Apply signature Kahoot! colors */
+#option-a { background-color: #e53935; } /* Red - Top Left */
+#option-b { background-color: #1e88e5; } /* Blue - Top Right */
+#option-c { background-color: #8bc34a; } /* Green - Bottom Left */
+#option-d { background-color: #ffb300; } /* Yellow - Bottom Right */
+
+/* Interactive feedback */
+.option:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Feedback Colors (Correct/Incorrect) */
+.option.correct {
+    background-color: #4CAF50 !important; /* Green */
+    transform: scale(1.05);
+}
+
+.option.incorrect {
+    background-color: #F44336 !important; /* Red */
+    opacity: 0.5; /* Dim wrong answer */
+}
