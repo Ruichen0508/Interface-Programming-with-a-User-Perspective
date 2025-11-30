@@ -1,0 +1,43 @@
+{
+  "name": "interface-programming-with-a-user-perspective",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "lint:js": "eslint . --ext .js",
+      "lint:css": "stylelint '**/*.css'",
+      "lint:html": "htmlhint '**/*.html'"
+    },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ruichen0508/Interface-Programming-with-a-User-Perspective.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Ruichen0508/Interface-Programming-with-a-User-Perspective/issues"
+  },
+  "homepage": "https://github.com/Ruichen0508/Interface-Programming-with-a-User-Perspective#readme",
+  "devDependencies": {
+    "eslint": "^9.39.1",
+    "htmlhint": "^1.8.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "stylelint": "^16.26.1",
+    "stylelint-config-standard": "^39.0.1"
+  },
+  "lint-staged": {
+    "*.js": [
+      "npm run lint:js"
+    ],
+    "*.css": [
+      "npm run lint:css"
+    ],
+    "*.html": [
+      "npm run lint:html"
+    ]
+  }
+}

@@ -1,0 +1,7 @@
+{
+    "tag-pair": true,         
+    "spec-char-escape": true, 
+    "attr-lowercase": true,  
+    "doctype-first": true,   
+    "title-require": true     
+}

@@ -1,0 +1,32 @@
+# .github/workflows/lint.yml
+name: Code Quality Check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Install Dependencies
+      # 安装项目依赖，包括所有 devDependencies 中的 Linter
+      run: npm install
+
+    - name: Run Linters on All Files
+      # 运行 package.json 中定义的脚本
+      run: |
+        npm run lint:js
+        npm run lint:css
+        npm run lint:html
