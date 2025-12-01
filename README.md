@@ -28,6 +28,13 @@ The project emphasizes a user-centric approach by focusing on dynamic, real-time
 ## 📂 Repository Structure
 
 The project structure is organized for maintainability:
+. ├── .github/workflows/ │ └── Deploy CI/CD including eslint, stylelint and htmlhintrc ├── burger-order-page/ │ ├── index.html # Main application interface (Menu and Cart) │ ├── confirmation.html # Final Order Confirmation Page │ └── scripts/ │ └── app.js # Main logic (cart, modals, routing/storage) │ └── styles/ │ └── main.css # Application styling ├── .eslintrc.json
+
+├── .stylelintrc.json
+
+├── .htmlhintrc
+
+├── package.json # Scripts and dependencies for linting └── README.md
 
 ## 🚀 Getting Started
 
