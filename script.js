@@ -1,36 +1,96 @@
 const questions = [
     {
-        question: "Which element is used to define the main body of an HTML document?",
-        options: ["<head>", "<body>", "<html>", "<title>"],
-        answer: "<body>",
-        correctIndex: 1
-    },
-    {
-        question: "Which CSS property is used to change the text color?",
-        options: ["background-color", "text-color", "color", "font-style"],
-        answer: "color",
+        question: "What is the capital city of Sweden?",
+        options: ["Malmö", "Gothenburg", "Stockholm", "Uppsala"],
+        answer: "Stockholm",
         correctIndex: 2
     },
     {
-        question: "What is the primary language for adding interactivity to a webpage?",
-        options: ["Python", "C#", "SQL", "JavaScript"],
-        answer: "JavaScript",
-        correctIndex: 3
+        question: "Which popular furniture retailer was founded in Sweden?",
+        options: ["IKEA", "H&M", "Volvo", "Spotify"],
+        answer: "IKEA",
+        correctIndex: 0
+    },
+    {
+        question: "Which Swedish band is famous for hits like 'Dancing Queen' and 'Mamma Mia'?",
+        options: ["Roxette", "Ace of Base", "ABBA", "The Cardigans"],
+        answer: "ABBA",
+        correctIndex: 2
+    },
+    {
+        question: "What traditional Swedish concept describes the comfortable, cozy, and contented feeling?",
+        options: ["Hygee", "Lagom", "Fika", "Sisu"],
+        answer: "Lagom",
+        correctIndex: 1
+    },
+    {
+        question: "The Nobel Prizes are awarded annually in Stockholm, but the Peace Prize is awarded in which other Nordic city?",
+        options: ["Oslo", "Helsinki", "Copenhagen", "Reykjavik"],
+        answer: "Oslo",
+        correctIndex: 0
     }
-    // ... More questions can be added here
 ];
 
 let currentQuestionIndex = 0;
 let score = 0;
 let timerInterval;
+let playerName = ''; 
+
+// Added: Static base scores for mock players (do not change during the game)
+const mockPlayers = [
+    { name: "Anton", score: 1000, date: "2025/11/30" },
+    { name: "Saga", score: 1200, date: "2025/11/30" },
+    { name: "Björn", score: 1500, date: "2025/11/30" },
+    { name: "Astrid", score: 2000, date: "2025/11/30" },
+];
 
 const questionArea = document.querySelector('#question-area h1');
-const optionButtons = document.querySelectorAll('.option');
+const optionsGrid = document.getElementById('options-grid'); 
 const timerDisplay = document.getElementById('timer');
 const questionNumberDisplay = document.getElementById('question-number');
 
+// ----------------------------------------------------
+// 1. Get Instant Leaderboard (Scores increase based on current question progress)
+// ----------------------------------------------------
+function getInstantLeaderboard() {
+    // Simulate score growth for mock players as the game progresses
+    const progressFactor = currentQuestionIndex / questions.length;
+    const maxScoreAdjustment = 3000; // Assumed difference between max score and base score
+    
+    // Copy base data and add score adjustment based on progress
+    return mockPlayers.map(player => ({
+        ...player,
+        // Adjust score based on progress to simulate gradual score growth
+        score: player.score + Math.round(maxScoreAdjustment * progressFactor) 
+    }));
+}
+
+// ----------------------------------------------------
+// 2. Quiz Flow Functions
+// ----------------------------------------------------
+
+function initializeQuiz() {
+    // Get current player name
+    const name = prompt("Enter your name for the temporary ranking:");
+    if (name && name.trim() !== "") {
+        playerName = name.trim();
+    } else {
+        playerName = "Player One";
+    }
+    loadQuestion(); 
+}
+
+
 function loadQuestion() {
-    // Check if all questions have been answered
+    // Recreate option buttons and add IDs (needed because showInstantRank clears the innerHTML)
+    optionsGrid.innerHTML = `
+        <button class="option" id="option-a">▲</button>
+        <button class="option" id="option-b">◆</button>
+        <button class="option" id="option-c">●</button>
+        <button class="option" id="option-d">■</button>
+    `;
+    const optionButtons = document.querySelectorAll('.option');
+    
     if (currentQuestionIndex >= questions.length) {
         endQuiz();
         return;
@@ -38,47 +98,53 @@ function loadQuestion() {
 
     const currentQ = questions[currentQuestionIndex];
     questionArea.textContent = currentQ.question;
-    questionNumberDisplay.textContent = `Question ${currentQuestionIndex + 1}/${questions.length}`;
+    
+    questionNumberDisplay.textContent = `Question ${currentQuestionIndex + 1}/${questions.length}`; 
 
-    // Update option text and reset buttons
     optionButtons.forEach((button, index) => {
-        // Prepend geometric symbols (Kahoot! style)
-        button.textContent = ['▲ ', '◆ ', '● ', '■ '][index] + currentQ.options[index];
-        button.onclick = () => handleAnswer(index); // Bind click event
-        button.disabled = false; // Re-enable buttons
-        button.classList.remove('correct', 'incorrect'); // Clear previous colors
+        const prefix = ['▲ ', '◆ ', '● ', '■ '][index];
+        button.textContent = prefix + currentQ.options[index];
+        
+        button.onclick = () => handleAnswer(index, optionButtons); 
+        button.disabled = false; 
+        
+        button.classList.remove('correct', 'incorrect', 'dim'); 
+        button.style.backgroundColor = ''; 
     });
     
-    startTimer(10); // Start the timer for 10 seconds per question
+    startTimer(10); 
 }
 
-function handleAnswer(selectedIndex) {
-    clearInterval(timerInterval); // Stop the timer immediately
+function handleAnswer(selectedIndex, optionButtons) {
+    clearInterval(timerInterval); 
     const currentQ = questions[currentQuestionIndex];
     
-    // Disable all buttons to prevent double-clicking
     optionButtons.forEach(button => button.disabled = true);
     
-    // Mark correct and incorrect options
     optionButtons.forEach((button, index) => {
         if (index === currentQ.correctIndex) {
-            button.classList.add('correct'); // Highlight the correct answer
-        } else if (index === selectedIndex) {
-            button.classList.add('incorrect'); // Highlight the user's incorrect choice
+            button.classList.add('correct'); 
+        } else if (index === selectedIndex) { 
+            button.classList.add('incorrect'); // Player chose incorrectly (Red)
+        } else {
+            button.classList.add('dim'); // Unchosen incorrect answer (Dim)
         }
     });
 
-    // Check for score (if the user chose a valid option)
     if (selectedIndex === currentQ.correctIndex) {
-        // Simple scoring: e.g., 1000 points per correct answer
-        score += 1000; 
+        // Check for score (Faster answer = Higher score)
+        const timeLeft = parseInt(timerDisplay.textContent.split(': ')[1].replace('s', '')) || 0;
+        score += 1000 + (timeLeft * 100); 
     }
 
-    // Delay before moving to the next question
     setTimeout(() => {
-        currentQuestionIndex++;
-        loadQuestion();
-    }, 2000); // Display the result for 2 seconds
+        if (currentQuestionIndex < questions.length - 1) {
+            showInstantRank(); 
+        } else {
+            // Last question, proceed to the podium after 2 seconds
+            endQuiz();
+        }
+    }, 2000); 
 }
 
 function startTimer(seconds) {
@@ -91,17 +157,148 @@ function startTimer(seconds) {
 
         if (timeLeft <= 0) {
             clearInterval(timerInterval);
-            // Time's up! Automatically moves to the next question (as an incorrect answer)
-            handleAnswer(-1); 
+            handleAnswer(-1, document.querySelectorAll('.option')); // Time's up
         }
     }, 1000);
 }
 
-function endQuiz() {
-    questionArea.textContent = `Quiz Finished! Your total score is: ${score}`;
-    document.getElementById('options-grid').innerHTML = ''; // Clear the options grid
-    questionNumberDisplay.textContent = 'Game Over';
+
+// ----------------------------------------------------
+// 3. New: Show Instant Rank (Called after each question)
+// ----------------------------------------------------
+
+function showInstantRank() {
+    clearInterval(timerInterval);
+    optionsGrid.innerHTML = ''; // Clear option buttons
+    timerDisplay.textContent = '';
+    
+    // Use getInstantLeaderboard to get progress-adjusted scores
+    let leaderboard = getInstantLeaderboard();
+    const currentPlayerEntry = { 
+        name: playerName, 
+        score: score, 
+        date: new Date().toLocaleTimeString() 
+    };
+    leaderboard.push(currentPlayerEntry);
+    leaderboard.sort((a, b) => b.score - a.score);
+
+    questionArea.textContent = `Question ${currentQuestionIndex + 1}/${questions.length} Summary`;
+    questionNumberDisplay.textContent = '📊 Instant Leaderboard 📊';
+    
+    // --- Instant Rank HTML structure ---
+    let rankHTML = `
+        <div class="rank-list-container">
+            <h2 class="current-score-display">Your Score: ${score} points</h2>
+            <div class="rank-list-header">
+                <span class="rank-col">Rank</span>
+                <span class="name-col">Player</span>
+                <span class="score-col">Score</span>
+            </div>
+    `;
+
+    leaderboard.forEach((entry, index) => { 
+        const rank = index + 1;
+        // Check if this is the current player
+        const isCurrentPlayer = (entry.name === playerName && entry.score === score);
+        const rowClass = isCurrentPlayer ? 'rank-item current-player-rank' : 'rank-item';
+                         
+        rankHTML += `
+            <div class="${rowClass}">
+                <span class="rank-col">${rank}</span>
+                <span class="name-col">${entry.name}</span>
+                <span class="score-col">${entry.score}</span>
+            </div>
+        `;
+    });
+
+    rankHTML += '</div>';
+    
+    optionsGrid.innerHTML = rankHTML; 
+    
+    // Delay 4 seconds before loading the next question
+    setTimeout(() => {
+        currentQuestionIndex++;
+        loadQuestion(); 
+    }, 4000); 
 }
 
-// Start the quiz when the script loads
-loadQuestion();
+
+// ----------------------------------------------------
+// 4. Final Podium (endQuiz)
+// ----------------------------------------------------
+
+function endQuiz() {
+    clearInterval(timerInterval);
+    optionsGrid.innerHTML = ''; 
+    timerDisplay.textContent = '';
+    
+    // 1. Get final leaderboard (using mockPlayers base score + max adjustment for high, stable final scores)
+    let finalLeaderboard = mockPlayers.map(player => ({
+        ...player,
+        score: player.score + 3000 // Final score gets a fixed high adjustment
+    }));
+    
+    const currentPlayerEntry = { 
+        name: playerName, 
+        score: score, 
+        date: new Date().toLocaleString() 
+    };
+    finalLeaderboard.push(currentPlayerEntry);
+    
+    // 2. Sort
+    finalLeaderboard.sort((a, b) => b.score - a.score);
+
+    // 3. Display results and title
+    questionArea.textContent = `🎉 Quiz Finished! Your final score is: ${score} points!`;
+    questionNumberDisplay.textContent = '🏆 Final Results - Top 3 🏆';
+    
+    // --- Podium HTML structure ---
+    
+    let podiumHTML = '<div class="podium-container">';
+
+    const topThree = [
+        finalLeaderboard[1], // Second Place
+        finalLeaderboard[0], // First Place
+        finalLeaderboard[2]  // Third Place
+    ];
+
+    topThree.forEach((entry, index) => {
+        // Safety check: ensure entry exists
+        if (!entry) return;
+        
+        // Find the actual rank (+1)
+        const rank = finalLeaderboard.findIndex(e => e === entry) + 1;
+        let positionClass = '';
+
+        if (index === 0) {
+            positionClass = 'podium-item second-place';
+        } else if (index === 1) {
+            positionClass = 'podium-item first-place';
+        } else if (index === 2) {
+            positionClass = 'podium-item third-place';
+        }
+
+        const isCurrentPlayer = (entry.name === playerName && entry.score === score);
+        const playerClass = isCurrentPlayer ? 'player-highlight' : '';
+        const nameDisplay = entry.name.length > 10 ? entry.name.substring(0, 8) + '...' : entry.name;
+        
+        podiumHTML += `
+            <div class="${positionClass}">
+                ${index === 1 ? '<div class="crown">👑</div>' : ''}
+                <div class="podium-score ${playerClass}">${entry.score}</div>
+                <div class="podium-name ${playerClass}">${nameDisplay}</div>
+                <div class="podium-base">
+                    <span class="podium-rank">${rank}</span>
+                </div>
+            </div>
+        `;
+    });
+
+    podiumHTML += '</div>';
+    
+    optionsGrid.innerHTML = podiumHTML; 
+}
+
+
+// Start the quiz
+initializeQuiz();

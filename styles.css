@@ -1,7 +1,8 @@
 /* Base Styles and Layout */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #2e2640; /* Kahoot! style deep purple background */
+    background: linear-gradient(to bottom, #7B2CBF 0%, #0077FF 100%);
+    
     color: white;
     display: flex;
     justify-content: center;
@@ -33,6 +34,7 @@ body {
     grid-template-rows: 1fr 1fr;
     gap: 20px; /* Spacing between buttons */
     height: 400px; /* Give the options area a defined height */
+    justify-content: center;
 }
 
 /* Individual Option Button */
@@ -52,10 +54,10 @@ body {
 }
 
 /* Apply signature Kahoot! colors */
-#option-a { background-color: #e53935; } /* Red - Top Left */
-#option-b { background-color: #1e88e5; } /* Blue - Top Right */
-#option-c { background-color: #8bc34a; } /* Green - Bottom Left */
-#option-d { background-color: #ffb300; } /* Yellow - Bottom Right */
+#option-a { background-color: #E21B3C; } /* Red - Top Left */
+#option-b { background-color: #1368CE; } /* Blue - Top Right */
+#option-c { background-color: #FFD602; } /* Green - Bottom Left */
+#option-d { background-color: #26890C; } /* Yellow - Bottom Right */
 
 /* Interactive feedback */
 .option:hover {
@@ -63,13 +65,228 @@ body {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Feedback Colors (Correct/Incorrect) */
-.option.correct {
-    background-color: #4CAF50 !important; /* Green */
-    transform: scale(1.05);
+/* Header Area (Timer and Question Number) */
+#header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; 
+    padding: 20px 0;
+    margin-bottom: 10px;
+    
+    font-size: 1.8em; 
+    font-weight: bold;
+}
+/* Style for dimming incorrect options */
+.option.dim {
+    /* Dim background color, close to Kahoot! gray style */
+    background-color: #555555 !important; 
+    /* Lower opacity */
+    opacity: 0.3; 
+    /* Remove hover effect */
+    pointer-events: none;
+    /* Ensure it doesn't interfere with the correct answer animation */
+    transform: none; 
+    box-shadow: none;
 }
 
-.option.incorrect {
-    background-color: #F44336 !important; /* Red */
-    opacity: 0.5; /* Dim wrong answer */
+/* Define animation */
+@keyframes correct-pulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 rgba(76, 175, 80, 0.4); }
+    50% { transform: scale(1.1); box-shadow: 0 0 20px rgba(76, 175, 80, 0.8); }
+    100% { transform: scale(1.05); box-shadow: 0 0 10px rgba(76, 175, 80, 0.6); }
 }
+
+/* Enhanced correct answer style */
+.option.correct {
+    /* Use brighter, purer green */
+    background-color: #4CAF50 !important; 
+    /* Apply bounce animation */
+    animation: correct-pulse 0.5s ease-out forwards;
+    /* Ensure it's above dimmed buttons */
+    z-index: 10; 
+}
+.option.incorrect {
+    background-color: #F44336 !important; 
+    color: white;
+}
+
+/* Unselected incorrect answers: Dim */
+.option.dim {
+    opacity: 0.5;
+}
+
+/* ------------------------------------- */
+/* Kahoot! Podium Styles */
+/* ------------------------------------- */
+
+/* Container: Used for centering and arranging the top three */
+.podium-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; /* Align podium from the bottom */
+    width: 100%;
+    max-width: 800px;
+    height: 350px; /* Reserve height for the podium */
+    margin: 30px auto;
+}
+
+.podium-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 0 10px;
+    text-align: center;
+    border-radius: 8px 8px 0 0; /* Top rounded corners */
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.5s ease-out; /* Smooth transition effect */
+    position: relative;
+    width: 25%; /* Ensure sufficient width */
+}
+
+/* Name and score display */
+.podium-name {
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 10px 5px;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.1); /* Slightly darker name background */
+}
+
+.podium-score {
+    font-size: 1.8em;
+    font-weight: 900;
+    padding-top: 20px;
+    padding-bottom: 5px;
+}
+
+/* Podium base */
+.podium-base {
+    width: 100%;
+    padding: 15px 0;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+    background-color: #ccc; /* Default base color */
+}
+
+.podium-rank {
+    /* Hide the rank on the base, as height represents the rank */
+    display: none; 
+}
+
+
+/* --- Specific Rank Styles --- */
+
+/* First Place */
+.first-place {
+    height: 250px; /* Highest */
+    background: linear-gradient(180deg, #FFD700 0%, #FFA500 100%); /* Gold gradient */
+    transform: scale(1.1); /* Slightly enlarge */
+    z-index: 3; /* Ensure it's in front */
+}
+.first-place .podium-base {
+    background-color: #F8CB1E;
+}
+.crown {
+    position: absolute;
+    top: -30px;
+    font-size: 2em;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Second Place */
+.second-place {
+    height: 180px; /* Medium height */
+    background: linear-gradient(180deg, #C0C0C0 0%, #A9A9A9 100%); /* Silver gradient */
+    z-index: 2;
+}
+.second-place .podium-base {
+    background-color: #B5B5B5;
+}
+
+/* Third Place */
+.third-place {
+    height: 120px; /* Lowest height */
+    background: linear-gradient(180deg, #CD7F32 0%, #8B4513 100%); /* Bronze gradient */
+    z-index: 1;
+}
+.third-place .podium-base {
+    background-color: #A0522D;
+}
+
+/* Current Player Highlight */
+.player-highlight {
+    color: #FF1744 !important; /* Striking red */
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.8);
+}
+.first-place .player-highlight,
+.second-place .player-highlight,
+.third-place .player-highlight {
+    /* Ensure the player score/name color is visible on dark background when highlighted */
+    color: #000000 !important; 
+}
+
+/* Adjust overall title and timer text color to stand out on the background */
+#question-area h1 {
+    color: #f0f0f0;
+    font-size: 2em;
+    text-shadow: 1px 1px 2px #000;
+}
+#timer, #question-number {
+    color: #ffffff;
+}
+/* ------------------------------------- */
+/* Instant Rank List Styles */
+/* ------------------------------------- */
+
+.rank-list-container {
+    width: 90%;
+    max-width: 500px;
+    margin: 40px auto; /* Center the container */
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.current-score-display {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    color: #FFD602; /* Highlight the score */
+    text-shadow: 1px 1px 3px #000;
+}
+
+.rank-list-header, .rank-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 10px;
+    font-size: 1.1em;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.rank-list-header {
+    background-color: #3f51b5; /* Header background color */
+    font-weight: bold;
+    color: white;
+}
+
+.rank-item {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.current-player-rank {
+    background-color: #FFEB3B; /* Bright yellow to highlight current player */
+    color: #333;
+    font-weight: bold;
+    transform: scale(1.02);
+    box-shadow: 0 0 10px rgba(255, 235, 59, 0.7);
+}
+
+/* Adjust column widths */
+.rank-col { width: 15%; text-align: center; font-weight: 700; }
+.name-col { width: 55%; text-align: left; }
+.score-col { width: 30%; text-align: right; font-weight: 700; }
