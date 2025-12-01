@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✅ Order Confirmed</title>
+    <link rel="stylesheet" href="styles/main.css"> 
+    <style>
+        /* Specific Styles for the Confirmation Page */
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+
+        #confirmation-box {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        #confirmation-box h1 {
+            color: #4CAF50; /* Bright Green */
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        #pickup-number {
+            font-size: 5em;
+            font-weight: bold;
+            color: #FF5722; /* Bright Orange-Red */
+            display: block;
+            margin: 20px 0;
+            padding: 10px;
+            border: 3px solid #FF5722;
+            border-radius: 10px;
+            letter-spacing: 5px;
+        }
+
+        .order-detail {
+            font-size: 1.2em;
+            margin: 15px 0;
+            color: #4f4f4f;
+        }
+
+        .home-button {
+            background-color: #c08081; /* Morandi Red/Rose */
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 1.1em;
+            margin-top: 20px;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        .home-button:hover {
+            background-color: #a06a6b;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="confirmation-box">
+        <h1>✅ Order Confirmed!</h1>
+        <p class="order-detail">Your order has been placed successfully.</p>
+        
+        <h2>Your Pickup Number is:</h2>
+        <span id="pickup-number">101</span> <p class="order-detail">Order Type: <strong id="order-type">Eat Here</strong></p>
+        <p class="order-detail">Total Amount: <strong id="order-total">$0.00</strong></p>
+        
+        <a href="index.html" class="home-button">Start New Order</a>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                // Retrieve stored data from localStorage
+                const orderDataString = localStorage.getItem('lastOrderData');
+                
+                if (orderDataString) {
+                    const orderData = JSON.parse(orderDataString);
+                    
+                    document.getElementById('pickup-number').textContent = orderData.pickupNumber;
+                    document.getElementById('order-type').textContent = orderData.orderType;
+                    document.getElementById('order-total').textContent = orderData.total;
+                    
+                    // Optional: Clear data after displaying
+                    localStorage.removeItem('lastOrderData');
+                } else {
+                    // Fallback if data is missing
+                    document.getElementById('confirmation-box').innerHTML = '<h1>Error</h1><p>No recent order found.</p><a href="index.html" class="home-button">Return to Menu</a>';
+                }
+            });
+        </script>
+    </div>
+
+</body>
+</html>

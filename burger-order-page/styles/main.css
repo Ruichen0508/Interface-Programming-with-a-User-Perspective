@@ -215,19 +215,47 @@ h2 {
     font-weight: bold;
 }
 
+/* --- New Styles for Cancel Button --- */
+#cancel-order-button {
+    width: 100%;
+    /* Morandi Rose/Red-based light gray */
+    background-color: #f0e6e0; 
+    color: #a0522d;
+    border: none;
+    padding: 15px;
+    font-size: 1.1em;
+    border-radius: 5px;
+    margin-top: 15px; 
+    margin-bottom: 5px; /* Provide space before checkout button */
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#cancel-order-button:hover:not(:disabled) {
+    background-color: #c08081; 
+    color: white;
+}
+
+#cancel-order-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    color: #6a6a6a;
+}
+
+/* --- Modified Checkout Button Style --- */
 #checkout-button {
     width: 100%;
-    /* BRIGHT GREEN COLOR */
     background-color: #4CAF50; 
     color: white;
     border: none;
     padding: 15px;
     font-size: 1.1em;
     border-radius: 5px;
-    margin-top: 15px;
+    margin-top: 5px; 
     cursor: pointer;
     transition: background-color 0.3s;
 }
+/* ... (rest of the CSS remains the same) ... */
 
 #checkout-button:hover:not(:disabled) {
     /* Slightly darker green on hover */
