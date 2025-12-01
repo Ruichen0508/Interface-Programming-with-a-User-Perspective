@@ -28,13 +28,26 @@ The project emphasizes a user-centric approach by focusing on dynamic, real-time
 ## 📂 Repository Structure
 
 The project structure is organized for maintainability:
-. ├── .github/workflows/ │ └── Deploy CI/CD including eslint, stylelint and htmlhintrc ├── burger-order-page/ │ ├── index.html # Main application interface (Menu and Cart) │ ├── confirmation.html # Final Order Confirmation Page │ └── scripts/ │ └── app.js # Main logic (cart, modals, routing/storage) │ └── styles/ │ └── main.css # Application styling ├── .eslintrc.json
-
-├── .stylelintrc.json
-
-├── .htmlhintrc
-
-├── package.json # Scripts and dependencies for linting └── README.md
+. (Project Root)
+├── .github/workflows/ (Continuous Integration)
+│   └── Deploy CI/CD including eslint, stylelint and htmlhintrc (CI/CD Workflow file)
+├── burger-order-page/ (The main ordering application)
+│   ├── index.html — Main menu and ordering interface
+│   ├── confirmation.html — Final order confirmation page (displays pickup number)
+│   ├── scripts/
+│   │   └── app.js — Core JavaScript logic (cart, modals, routing/storage)
+│   └── styles/
+│       └── main.css — Application styling
+├── kahoot-game/ (Initial implementation of a quiz game)
+│   ├── index.html
+│   ├── script.js
+│   └── styles.css
+├── Configuration Files (Quality Control)
+│   ├── .eslintrc.json — Configuration for ESLint (JavaScript linting)
+│   ├── .stylelintrc.json — Configuration for Stylelint (CSS linting)
+│   ├── .htmlhintrc — Configuration for HTMLHint (HTML validation)
+├── package.json — Project dependencies and script definitions
+└── README.md — Project overview and documentation
 
 ## 🚀 Getting Started
 
