@@ -65,12 +65,14 @@
                 <h3>Classic Fries</h3>
                 <p>Golden fried potatoes with sea salt.</p>
                 <p class="price">$3.50</p>
-                <button class="add-to-cart-simple">Add Fries</button> </div>
+                <button class="add-to-cart-simple">Add Fries</button> 
+            </div>
             <div class="menu-item side-item" data-category="side" data-name="Soft Drink" data-price="2.00">
                 <h3>Soft Drink</h3>
                 <p>Selection of fizzy beverages (Cola, Soda, etc.).</p>
                 <p class="price">$2.00</p>
-                <button class="add-to-cart-simple">Add Drink</button> </div>
+                <button class="add-to-cart-simple">Add Drink</button> 
+            </div>
             
         </main>
 
@@ -84,7 +86,7 @@
             <button id="checkout-button" disabled>Place Order</button>
         </aside>
         
-    <div id="combo-modal" class="modal">
+    </div> <div id="combo-modal" class="modal">
         <div class="modal-content">
             <span class="close-button">&times;</span>
             <h2>Customize Your Meal: <span id="combo-burger-name"></span></h2>
@@ -122,6 +124,21 @@
                 <button id="add-burger-only" class="skip-combo-btn">Skip Combo & Add Burger Only</button>
 
             </div>
+        </div>
+    </div>
+
+    <div id="checkout-modal" class="modal">
+        <div class="modal-content">
+            <span class="checkout-close-button">&times;</span>
+            <h2>Confirm Your Order</h2>
+            <p>Please select how you would like to receive your order:</p>
+            
+            <div id="checkout-options">
+                <button id="eat-here-btn" class="checkout-option-btn">🍽️ Eat Here</button>
+                <button id="take-away-btn" class="checkout-option-btn">🛍️ Take Away</button>
+            </div>
+            
+            <p class="final-total">Your Total: <strong id="final-checkout-total"></strong></p>
         </div>
     </div>
 

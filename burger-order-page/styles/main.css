@@ -13,8 +13,8 @@ body {
     /* --- LAYOUT & TEXT COLOR --- */
     color: #4f4f4f;
     display: flex;
-    flex-direction: column; /* Main content flows vertically */
-    align-items: center; /* Center header and wrapper */
+    flex-direction: column; 
+    align-items: center; 
     padding: 30px;
 }
 
@@ -42,24 +42,24 @@ h1 {
     margin-top: 10px;
 }
 
-/* --- NEW: Content Wrapper for the three main sections --- */
+/* --- Content Wrapper for the three main sections --- */
 #content-wrapper {
     display: flex;
     width: 100%;
-    max-width: 1200px; /* Max width constraint */
+    max-width: 1200px; 
     gap: 20px;
-    align-items: flex-start; /* Align content to the top */
+    align-items: flex-start; 
 }
 
-/* --- NEW: Category Navigation Styles --- */
+/* --- Category Navigation Styles --- */
 #category-nav {
-    flex: 0 0 180px; /* Fixed width sidebar */
+    flex: 0 0 180px; 
     background-color: #ffffff;
     padding: 15px;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     position: sticky;
-    top: 30px; /* Stick to the top while scrolling */
+    top: 30px; 
 }
 
 #category-nav h2 {
@@ -70,7 +70,7 @@ h1 {
 
 .category-btn {
     width: 100%;
-    background-color: #f0e6e0; /* Light Morandi background */
+    background-color: #f0e6e0; 
     color: #a0522d;
     border: none;
     padding: 10px 15px;
@@ -86,13 +86,13 @@ h1 {
 }
 
 .category-btn.active {
-    background-color: #c08081; /* Morandi Dusty Rose/Red */
+    background-color: #c08081; 
     color: white;
     font-weight: bold;
 }
 
 main#menu {
-    flex: 3; /* Menu area takes up the majority of space */
+    flex: 3; 
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
@@ -135,7 +135,6 @@ main#menu {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
-    /* Ensure simple button is styled similarly */
 }
 
 .add-to-cart:hover, .add-to-cart-simple:hover {
@@ -155,9 +154,6 @@ aside#order-summary {
     position: sticky; 
     top: 30px;
 }
-
-/* --- Cart and Modal Styles (Keep the rest of your previous styles) --- */
-/* ... (Ensure all quantity control, cart item, and modal styles are retained here) ... */
 
 h2 {
     color: #a0522d;
@@ -221,7 +217,8 @@ h2 {
 
 #checkout-button {
     width: 100%;
-    background-color: #4CAF50;
+    /* BRIGHT GREEN COLOR */
+    background-color: #4CAF50; 
     color: white;
     border: none;
     padding: 15px;
@@ -233,14 +230,14 @@ h2 {
 }
 
 #checkout-button:hover:not(:disabled) {
-    background-color: #4CAF50;
+    /* Slightly darker green on hover */
+    background-color: #45a049; 
 }
 
 #checkout-button:disabled {
     background-color: #cccccc;
     cursor: not-allowed;
 }
-
 
 /* Modal Backdrop */
 .modal {
@@ -267,7 +264,7 @@ h2 {
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
-.close-button {
+.close-button, .checkout-close-button {
     color: #a0522d;
     float: right;
     font-size: 28px;
@@ -275,7 +272,9 @@ h2 {
 }
 
 .close-button:hover,
-.close-button:focus {
+.close-button:focus,
+.checkout-close-button:hover,
+.checkout-close-button:focus {
     color: #8b4513;
     text-decoration: none;
     cursor: pointer;
@@ -303,7 +302,7 @@ h2 {
 
 #add-combo-to-cart {
     width: 100%;
-    background-color: #80998a; 
+    background-color: #4CAF50; 
     color: white;
     border: none;
     padding: 15px;
@@ -315,7 +314,7 @@ h2 {
 }
 
 #add-combo-to-cart:hover {
-    background-color: #4CAF50;
+    background-color: #6a8374;
 }
 
 .skip-combo-btn {
@@ -333,4 +332,37 @@ h2 {
 
 .skip-combo-btn:hover {
     background-color: #b0b0b0;
+}
+
+/* Checkout Confirmation Modal Styles */
+
+.final-total {
+    margin-top: 20px;
+    font-size: 1.5em;
+    text-align: center;
+    color: #a0522d; 
+}
+
+#checkout-options {
+    display: flex;
+    justify-content: space-around;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.checkout-option-btn {
+    flex: 1;
+    padding: 15px 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    background-color: #c08081; 
+    color: white;
+}
+
+.checkout-option-btn:hover {
+    background-color: #a06a6b;
 }

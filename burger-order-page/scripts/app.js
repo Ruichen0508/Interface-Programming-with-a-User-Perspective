@@ -4,9 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const cartList = document.getElementById('cart-list');
     const totalPriceSpan = document.getElementById('total-price');
     const checkoutButton = document.getElementById('checkout-button');
-    const categoryNav = document.getElementById('category-nav'); 
+    const categoryNav = document.getElementById('category-nav');
 
-    // Modal Elements
+    // Combo Modal Elements
     const comboModal = document.getElementById('combo-modal');
     const closeButton = document.querySelector('.close-button');
     const comboBurgerName = document.getElementById('combo-burger-name');
@@ -14,19 +14,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const comboSelector = document.getElementById('combo-selector');
     const addComboButton = document.getElementById('add-combo-to-cart');
     const addBurgerOnlyButton = document.getElementById('add-burger-only');
-    
-    // NEW ELEMENT: Size Selector
     const sizeOptions = document.getElementById('size-options');
-
+    
+    // Checkout Modal Elements
+    const checkoutModal = document.getElementById('checkout-modal');
+    const checkoutCloseButton = document.querySelector('.checkout-close-button');
+    const finalCheckoutTotal = document.getElementById('final-checkout-total');
+    const eatHereBtn = document.getElementById('eat-here-btn');
+    const takeAwayBtn = document.getElementById('take-away-btn');
+    
     let cart = []; 
-    // Now stores basePrice and currentPrice
     let selectedBurger = { 
         basePrice: 0, 
         currentPrice: 0, 
         name: '' 
     }; 
 
-    // --- NEW: CATEGORY FILTERING LOGIC (Unchanged) ---
+    // --- CATEGORY FILTERING LOGIC ---
     categoryNav.addEventListener('click', (event) => {
         const target = event.target;
         if (target.classList.contains('category-btn')) {
@@ -50,12 +54,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- HELPER FUNCTION: Calculate Combo Price ---
+    // --- COMBO PRICE/SIZE LOGIC ---
     function calculateComboPrice() {
-        // Use the current adjusted price of the burger
         const burgerPrice = selectedBurger.currentPrice || 0; 
-        
-        // Find selected drink and side
         const selectedDrinkInput = comboSelector.querySelector('input[name="drink"]:checked');
         const selectedSideInput = comboSelector.querySelector('input[name="side"]:checked');
 
@@ -66,12 +67,10 @@ document.addEventListener('DOMContentLoaded', () => {
         comboTotalSpan.textContent = currentTotal.toFixed(2);
     }
     
-    // --- NEW: Function to update burger price based on size ---
     function updateBurgerPrice() {
         const selectedSizeInput = sizeOptions.querySelector('input[name="size"]:checked');
         if (selectedSizeInput) {
             const modifier = parseFloat(selectedSizeInput.dataset.modifier);
-            // Update the burger's current price
             selectedBurger.currentPrice = selectedBurger.basePrice + modifier;
         }
         calculateComboPrice();
@@ -79,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- EVENT LISTENERS ---
 
-    // 1. Listen for clicks on the main menu area (Combo & Simple buttons)
+    // 1. Menu Clicks (Combo & Simple buttons)
     menu.addEventListener('click', (event) => {
         const target = event.target;
         const itemElement = target.closest('.menu-item');
@@ -89,21 +88,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const itemPrice = parseFloat(itemElement.dataset.price);
 
         if (target.classList.contains('add-to-cart')) {
-            // A. Burger Combo Button: Open the modal
+            // A. Burger Combo Button: Open the combo modal
             selectedBurger.name = itemName;
-            selectedBurger.basePrice = itemPrice; // Store base price
+            selectedBurger.basePrice = itemPrice;
             
-            // Open modal and reset selections
             comboBurgerName.textContent = selectedBurger.name;
             comboModal.style.display = 'block';
 
-            // Reset size to Standard (default selected)
             sizeOptions.querySelector('input[value="Standard"]').checked = true;
-            
-            // Reset other options
             comboSelector.querySelectorAll('input[name="drink"], input[name="side"]').forEach(radio => radio.checked = false);
             
-            // Calculate initial price (Standard size)
             updateBurgerPrice(); 
 
         } else if (target.classList.contains('add-to-cart-simple')) {
@@ -112,16 +106,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 2. NEW: Listen for size changes in the modal (recalculate price)
+    // 2. Combo Modal option changes
     sizeOptions.addEventListener('change', updateBurgerPrice);
-
-    // 3. Listen for other option changes (drink/side)
     comboSelector.addEventListener('change', calculateComboPrice);
 
-
-    // 4. Handler for 'Skip Combo & Add Burger Only' button
+    // 3. 'Skip Combo & Add Burger Only' handler
     addBurgerOnlyButton.addEventListener('click', () => {
-        // Add item using the currently selected size and price
         const selectedSize = sizeOptions.querySelector('input[name="size"]:checked').value;
         const finalName = `${selectedBurger.name} (${selectedSize})`;
         
@@ -129,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
         comboModal.style.display = 'none'; 
     });
 
-    // 5. Add Combo to Cart button handler
+    // 4. 'Add Combo to Cart' button handler
     addComboButton.addEventListener('click', () => {
         const selectedDrink = comboSelector.querySelector('input[name="drink"]:checked');
         const selectedSide = comboSelector.querySelector('input[name="side"]:checked');
@@ -150,18 +140,55 @@ document.addEventListener('DOMContentLoaded', () => {
         comboModal.style.display = 'none'; 
     });
 
-    // 6. Modal closing logic (unchanged)
+    // 5. Combo Modal closing logic 
     closeButton.onclick = () => {
         comboModal.style.display = 'none';
+    }
+
+
+    // --- CHECKOUT LOGIC MODIFICATIONS ---
+
+    // 6. Checkout button: Opens the new confirmation modal
+    checkoutButton.addEventListener('click', () => {
+        const currentTotal = totalPriceSpan.textContent;
+        finalCheckoutTotal.textContent = currentTotal;
+        checkoutModal.style.display = 'block';
+    });
+
+    // 7. Checkout Option Handlers (Final confirmation)
+    const finalizeOrder = (orderType) => {
+        const currentTotal = finalCheckoutTotal.textContent;
+        alert(`Thank you for your order! Your total is ${currentTotal}. We confirm your choice: ${orderType}.`);
+        
+        // Finalize: Clear cart and close modal
+        cart = []; 
+        updateCartUI(); 
+        checkoutModal.style.display = 'none';
+    };
+
+    eatHereBtn.addEventListener('click', () => {
+        finalizeOrder('Eat Here');
+    });
+
+    takeAwayBtn.addEventListener('click', () => {
+        finalizeOrder('Take Away');
+    });
+
+    // 8. Checkout Modal closing logic
+    checkoutCloseButton.onclick = () => {
+        checkoutModal.style.display = 'none';
     }
     window.onclick = (event) => {
         if (event.target == comboModal) {
             comboModal.style.display = 'none';
         }
+        if (event.target == checkoutModal) { 
+            checkoutModal.style.display = 'none';
+        }
     }
 
 
-    // --- CART MANAGEMENT FUNCTIONS (UNCHANGED) ---
+    // --- CART MANAGEMENT FUNCTIONS ---
 
     function addItemToCart(name, price) {
         const existingItem = cart.find(item => item.name === name);
@@ -227,12 +254,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    checkoutButton.addEventListener('click', () => {
-        alert(`Thank you for your order! Your total is ${totalPriceSpan.textContent}.`);
-        cart = []; 
-        updateCartUI(); 
-    });
-
     // Initialize: Show all items on load
     document.querySelector('.category-btn[data-category="all"]').click();
 });
