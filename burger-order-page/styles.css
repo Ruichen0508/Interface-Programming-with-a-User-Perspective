@@ -1,0 +1,55 @@
+/* Basic Reset */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    display: flex; /* Use Flexbox for layout */
+    padding: 20px;
+}
+
+header {
+    width: 100%;
+    text-align: center;
+    grid-column: 1 / -1; /* Span all columns */
+    margin-bottom: 20px;
+}
+
+main#menu {
+    flex-grow: 3; /* Menu area takes up most of the space */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.menu-item {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 300px; /* Set the width of the menu items */
+}
+
+/* Order Summary Sidebar */
+aside#order-summary {
+    flex-grow: 1; /* Order summary takes up less space */
+    min-width: 250px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-left: 20px;
+    height: fit-content; /* Make the sidebar height fit its content */
+}
+
+#cart-list {
+    list-style: none;
+    padding: 0;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    border-bottom: 1px dashed #ccc;
+}

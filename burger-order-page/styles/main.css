@@ -1,0 +1,149 @@
+/* Basic Reset */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    
+    /* --- MORANDI BACKGROUND COLOR (Muted Apricot/Orange) --- */
+    background-color: #e0a37e; 
+    
+    background-size: cover; 
+    background-attachment: fixed; 
+    background-position: center;
+    
+    /* --- LAYOUT & TEXT COLOR --- */
+    color: #4f4f4f; /* Soft dark gray text for contrast */
+    display: flex;
+    flex-wrap: wrap; /* Allows wrapping on smaller screens */
+    justify-content: center;
+    align-items: flex-start; /* Aligns content to the top */
+    padding: 30px;
+    gap: 30px; /* Space between main and aside */
+}
+
+/* Header needs to span the full width of the view */
+header {
+    width: 100%;
+    max-width: 1200px;
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 20px;
+    /* Soft, muted container color */
+    background-color: #f7f7f7; 
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+h1 {
+    color: #a0522d; /* Sienna/Terracotta for contrast */
+    font-size: 2.5em;
+    font-weight: 300; /* Lighter font weight for elegance */
+}
+
+main#menu {
+    flex: 3; /* Allows the menu to take up more space */
+    min-width: 600px; /* Minimum size for the menu area */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.menu-item {
+    /* Soft container background, slightly darker than the header/aside */
+    background-color: #ffffff; 
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    flex: 1 1 300px; /* Allows flexibility and ensures a minimum width */
+    transition: transform 0.3s;
+}
+
+.menu-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.menu-item h3 {
+    color: #8b4513; /* Saddle brown for main titles */
+}
+
+.price {
+    font-weight: bold;
+    color: #4682b4; /* Muted blue for price */
+}
+
+.add-to-cart {
+    background-color: #c08081; /* Morandi Dusty Rose/Red button */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-to-cart:hover {
+    background-color: #a06a6b;
+}
+
+/* Order Summary Sidebar */
+aside#order-summary {
+    flex: 1; /* Allows the sidebar to grow/shrink based on space */
+    min-width: 250px;
+    max-width: 300px;
+    /* Soft container background, matching the header */
+    background-color: #f7f7f7; 
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: fit-content; 
+    position: sticky; /* Keeps the order summary visible while scrolling */
+    top: 30px;
+}
+
+h2 {
+    color: #a0522d; /* Sienna for sidebar title */
+}
+
+#cart-list {
+    list-style: none;
+    padding: 0;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px dashed #ccc;
+    font-size: 0.95em;
+}
+
+.total-container {
+    padding-top: 10px;
+    border-top: 1px solid #ccc;
+    margin-top: 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+#checkout-button {
+    width: 100%;
+    background-color: #80998a; /* Morandi Sage Green for action */
+    color: white;
+    border: none;
+    padding: 15px;
+    font-size: 1.1em;
+    border-radius: 5px;
+    margin-top: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#checkout-button:hover:not(:disabled) {
+    background-color: #6a8374;
+}
+
+#checkout-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}

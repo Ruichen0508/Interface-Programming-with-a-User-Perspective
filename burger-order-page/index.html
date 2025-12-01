@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍔 Burger Order Page</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <header>
+        <h1>Delicious Burger Menu</h1>
+    </header>
+
+    <main id="menu">
+        <div class="menu-item" data-name="Classic Beef" data-price="8.50">
+            <h3>Classic Beef Burger</h3>
+            <p>Pure beef patty, lettuce, tomato, and secret sauce.</p>
+            <p class="price">$8.50</p>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+
+        <div class="menu-item" data-name="Veggie Delight" data-price="7.00">
+            <h3>Veggie Delight Burger</h3>
+            <p>Grilled vegetable patty, guacamole, on a whole wheat bun.</p>
+            <p class="price">$7.00</p>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+        
+        </main>
+
+    <aside id="order-summary">
+        <h2>🛒 Your Order</h2>
+        <ul id="cart-list">
+            </ul>
+        <div class="total-container">
+            <strong>Total:</strong> <span id="total-price">$0.00</span>
+        </div>
+        <button id="checkout-button" disabled>Place Order</button>
+    </aside>
+
+    <script src="scripts/app.js"></script>
+</body>
+</html>
