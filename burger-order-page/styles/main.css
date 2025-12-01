@@ -6,55 +6,110 @@ body {
     
     /* --- MORANDI BACKGROUND COLOR (Muted Apricot/Orange) --- */
     background-color: #e0a37e; 
-    
     background-size: cover; 
     background-attachment: fixed; 
     background-position: center;
     
     /* --- LAYOUT & TEXT COLOR --- */
-    color: #4f4f4f; /* Soft dark gray text for contrast */
+    color: #4f4f4f;
     display: flex;
-    flex-wrap: wrap; /* Allows wrapping on smaller screens */
-    justify-content: center;
-    align-items: flex-start; /* Aligns content to the top */
+    flex-direction: column; /* Main content flows vertically */
+    align-items: center; /* Center header and wrapper */
     padding: 30px;
-    gap: 30px; /* Space between main and aside */
 }
 
-/* Header needs to span the full width of the view */
 header {
     width: 100%;
     max-width: 1200px;
     text-align: center;
     margin-bottom: 20px;
     padding: 20px;
-    /* Soft, muted container color */
     background-color: #f7f7f7; 
     border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
-    color: #a0522d; /* Sienna/Terracotta for contrast */
+    color: #a0522d; 
     font-size: 2.5em;
-    font-weight: 300; /* Lighter font weight for elegance */
+    font-weight: 300; 
+}
+
+.address {
+    color: #6a6a6a; 
+    font-size: 0.9em;
+    line-height: 1.6;
+    margin-top: 10px;
+}
+
+/* --- NEW: Content Wrapper for the three main sections --- */
+#content-wrapper {
+    display: flex;
+    width: 100%;
+    max-width: 1200px; /* Max width constraint */
+    gap: 20px;
+    align-items: flex-start; /* Align content to the top */
+}
+
+/* --- NEW: Category Navigation Styles --- */
+#category-nav {
+    flex: 0 0 180px; /* Fixed width sidebar */
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 30px; /* Stick to the top while scrolling */
+}
+
+#category-nav h2 {
+    color: #a0522d;
+    margin-top: 0;
+    font-size: 1.5em;
+}
+
+.category-btn {
+    width: 100%;
+    background-color: #f0e6e0; /* Light Morandi background */
+    color: #a0522d;
+    border: none;
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.category-btn:hover {
+    background-color: #e0d1c7;
+}
+
+.category-btn.active {
+    background-color: #c08081; /* Morandi Dusty Rose/Red */
+    color: white;
+    font-weight: bold;
 }
 
 main#menu {
-    flex: 3; /* Allows the menu to take up more space */
-    min-width: 600px; /* Minimum size for the menu area */
+    flex: 3; /* Menu area takes up the majority of space */
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    min-width: 600px;
+}
+
+/* Style for hidden items */
+.menu-item.hidden {
+    display: none;
 }
 
 .menu-item {
-    /* Soft container background, slightly darker than the header/aside */
     background-color: #ffffff; 
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    flex: 1 1 300px; /* Allows flexibility and ensures a minimum width */
+    flex: 1 1 300px; 
     transition: transform 0.3s;
 }
 
@@ -64,45 +119,48 @@ main#menu {
 }
 
 .menu-item h3 {
-    color: #8b4513; /* Saddle brown for main titles */
+    color: #8b4513; 
 }
 
 .price {
     font-weight: bold;
-    color: #4682b4; /* Muted blue for price */
+    color: #4682b4; 
 }
 
-.add-to-cart {
-    background-color: #c08081; /* Morandi Dusty Rose/Red button */
+.add-to-cart, .add-to-cart-simple {
+    background-color: #c08081;
     color: white;
     border: none;
     padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    /* Ensure simple button is styled similarly */
 }
 
-.add-to-cart:hover {
+.add-to-cart:hover, .add-to-cart-simple:hover {
     background-color: #a06a6b;
 }
 
 /* Order Summary Sidebar */
 aside#order-summary {
-    flex: 1; /* Allows the sidebar to grow/shrink based on space */
+    flex: 1; 
     min-width: 250px;
     max-width: 300px;
-    /* Soft container background, matching the header */
     background-color: #f7f7f7; 
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     height: fit-content; 
-    position: sticky; /* Keeps the order summary visible while scrolling */
+    position: sticky; 
     top: 30px;
 }
 
+/* --- Cart and Modal Styles (Keep the rest of your previous styles) --- */
+/* ... (Ensure all quantity control, cart item, and modal styles are retained here) ... */
+
 h2 {
-    color: #a0522d; /* Sienna for sidebar title */
+    color: #a0522d;
 }
 
 #cart-list {
@@ -118,6 +176,41 @@ h2 {
     font-size: 0.95em;
 }
 
+.quantity-control {
+    display: flex;
+    align-items: center;
+}
+
+.quantity-control button {
+    background-color: transparent;
+    color: #a0522d;
+    border: 1px solid #a0522d;
+    padding: 3px 8px;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 1em;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s;
+}
+
+.quantity-control button:hover {
+    background-color: #f0e6e0;
+}
+
+.item-quantity {
+    display: inline-block;
+    min-width: 15px;
+    text-align: center;
+    font-weight: bold;
+    color: #4f4f4f;
+}
+
 .total-container {
     padding-top: 10px;
     border-top: 1px solid #ccc;
@@ -128,7 +221,7 @@ h2 {
 
 #checkout-button {
     width: 100%;
-    background-color: #80998a; /* Morandi Sage Green for action */
+    background-color: #4CAF50;
     color: white;
     border: none;
     padding: 15px;
@@ -140,10 +233,104 @@ h2 {
 }
 
 #checkout-button:hover:not(:disabled) {
-    background-color: #6a8374;
+    background-color: #4CAF50;
 }
 
 #checkout-button:disabled {
     background-color: #cccccc;
     cursor: not-allowed;
+}
+
+
+/* Modal Backdrop */
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.6);
+}
+
+/* Modal Content Box */
+.modal-content {
+    background-color: #f7f7f7; 
+    margin: 10% auto; 
+    padding: 30px;
+    border: 1px solid #888;
+    width: 80%; 
+    max-width: 600px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.close-button {
+    color: #a0522d;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #8b4513;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Combo Selector Styles */
+.selection-group {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #ffffff;
+}
+
+.selection-group h3 {
+    margin-top: 0;
+    color: #8b4513;
+}
+
+.options-container label {
+    display: block;
+    padding: 5px 0;
+    cursor: pointer;
+}
+
+#add-combo-to-cart {
+    width: 100%;
+    background-color: #80998a; 
+    color: white;
+    border: none;
+    padding: 15px;
+    font-size: 1.2em;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+}
+
+#add-combo-to-cart:hover {
+    background-color: #4CAF50;
+}
+
+.skip-combo-btn {
+    width: 100%;
+    background-color: #cccccc; 
+    color: #4f4f4f;
+    border: none;
+    padding: 15px;
+    font-size: 1em;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px; 
+}
+
+.skip-combo-btn:hover {
+    background-color: #b0b0b0;
 }

@@ -9,34 +9,121 @@
 <body>
     <header>
         <h1>Delicious Burger Menu</h1>
+        <p class="address">
+            📍 **Location:** 123 Morandi Street, Morandi City, 54321<br>
+            📞 **Phone:** (555) 555-BURG
+        </p>
     </header>
 
-    <main id="menu">
-        <div class="menu-item" data-name="Classic Beef" data-price="8.50">
-            <h3>Classic Beef Burger</h3>
-            <p>Pure beef patty, lettuce, tomato, and secret sauce.</p>
-            <p class="price">$8.50</p>
-            <button class="add-to-cart">Add to Cart</button>
-        </div>
-
-        <div class="menu-item" data-name="Veggie Delight" data-price="7.00">
-            <h3>Veggie Delight Burger</h3>
-            <p>Grilled vegetable patty, guacamole, on a whole wheat bun.</p>
-            <p class="price">$7.00</p>
-            <button class="add-to-cart">Add to Cart</button>
-        </div>
+    <div id="content-wrapper"> 
         
+        <nav id="category-nav">
+            <h2>Categories</h2>
+            <button class="category-btn active" data-category="all">All Items</button>
+            
+            <button class="category-btn" data-category="beef">Beef Burgers</button>
+            <button class="category-btn" data-category="chicken">Chicken Burgers</button>
+            <button class="category-btn" data-category="vegan">Vegan Burgers</button>
+            <button class="category-btn" data-category="side">Sides & Drinks</button>
+        </nav>
+
+        <main id="menu">
+            <div class="menu-item" data-category="beef" data-name="Classic Beef" data-price="8.50">
+                <h3>Classic Beef Burger</h3>
+                <p>Pure beef patty, lettuce, tomato, and secret sauce.</p>
+                <p class="price">$8.50</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            <div class="menu-item" data-category="beef" data-name="Mushroom Swiss" data-price="9.50">
+                <h3>Mushroom Swiss Burger</h3>
+                <p>Sautéed mushrooms, melted Swiss cheese, and truffle aioli.</p>
+                <p class="price">$9.50</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            <div class="menu-item" data-category="beef" data-name="BBQ Bacon" data-price="10.00">
+                <h3>BBQ Bacon Burger</h3>
+                <p>Crispy bacon, onion rings, cheddar cheese, and tangy BBQ sauce.</p>
+                <p class="price">$10.00</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+
+            <div class="menu-item" data-category="vegan" data-name="Veggie Delight" data-price="7.00">
+                <h3>Veggie Delight Burger</h3>
+                <p>Grilled vegetable patty, guacamole, on a whole wheat bun.</p>
+                <p class="price">$7.00</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            
+            <div class="menu-item" data-category="chicken" data-name="Spicy Chicken" data-price="8.75">
+                <h3>Spicy Chicken Burger</h3>
+                <p>Crispy fried chicken, hot pepper sauce, and slaw.</p>
+                <p class="price">$8.75</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            
+            <div class="menu-item side-item" data-category="side" data-name="Classic Fries" data-price="3.50">
+                <h3>Classic Fries</h3>
+                <p>Golden fried potatoes with sea salt.</p>
+                <p class="price">$3.50</p>
+                <button class="add-to-cart-simple">Add Fries</button> </div>
+            <div class="menu-item side-item" data-category="side" data-name="Soft Drink" data-price="2.00">
+                <h3>Soft Drink</h3>
+                <p>Selection of fizzy beverages (Cola, Soda, etc.).</p>
+                <p class="price">$2.00</p>
+                <button class="add-to-cart-simple">Add Drink</button> </div>
+            
         </main>
 
-    <aside id="order-summary">
-        <h2>🛒 Your Order</h2>
-        <ul id="cart-list">
-            </ul>
-        <div class="total-container">
-            <strong>Total:</strong> <span id="total-price">$0.00</span>
+        <aside id="order-summary">
+            <h2>🛒 Your Order</h2>
+            <ul id="cart-list">
+                </ul>
+            <div class="total-container">
+                <strong>Total:</strong> <span id="total-price">$0.00</span>
+            </div>
+            <button id="checkout-button" disabled>Place Order</button>
+        </aside>
+        
+    <div id="combo-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Customize Your Meal: <span id="combo-burger-name"></span></h2>
+            
+            <div id="combo-selector">
+                
+                <div class="selection-group" id="size-group">
+                    <h3>0. Choose Burger Size</h3>
+                    <div class="options-container" id="size-options">
+                        <label><input type="radio" name="size" value="Standard" data-modifier="0.00" checked> Standard</label>
+                        <label><input type="radio" name="size" value="Large" data-modifier="2.00"> Large (+ $2.00)</label>
+                        <label><input type="radio" name="size" value="XL" data-modifier="4.00"> XL (+ $4.00)</label>
+                    </div>
+                </div>
+                
+                <div class="selection-group">
+                    <h3>1. Choose Your Drink (+$2.00)</h3>
+                    <div class="options-container" id="drink-options">
+                        <label><input type="radio" name="drink" value="Cola" data-price="2.00" required> Cola</label>
+                        <label><input type="radio" name="drink" value="Soda" data-price="2.00"> Lemon Soda</label>
+                        <label><input type="radio" name="drink" value="Water" data-price="2.00"> Bottled Water</label>
+                    </div>
+                </div>
+
+                <div class="selection-group">
+                    <h3>2. Choose Your Side (+$3.50)</h3>
+                    <div class="options-container" id="side-options">
+                        <label><input type="radio" name="side" value="Fries" data-price="3.50" required> Classic Fries</label>
+                        <label><input type="radio" name="side" value="Onion Rings" data-price="3.50"> Onion Rings</label>
+                        <label><input type="radio" name="side" value="Salad" data-price="3.50"> Side Salad</label>
+                    </div>
+                </div>
+                
+                <button id="add-combo-to-cart">Add Combo to Order (Total: $<span id="combo-total">0.00</span>)</button>
+                <button id="add-burger-only" class="skip-combo-btn">Skip Combo & Add Burger Only</button>
+
+            </div>
         </div>
-        <button id="checkout-button" disabled>Place Order</button>
-    </aside>
+    </div>
 
     <script src="scripts/app.js"></script>
 </body>
